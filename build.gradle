@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
+javafx {
+    version = "17"
+    modules = [ 'javafx.controls' ]
+}
+
+application {
+    mainClassName = "edu.bsu.cs222.MainGUI"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.6.0'
+}
+
+test {
+    useJUnitPlatform()
+}
