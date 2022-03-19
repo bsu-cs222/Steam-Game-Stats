@@ -10,7 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -51,14 +54,23 @@ public class MainGUI extends Application {
         searchButton.setDisable(true);
         textField.setDisable(true);
         executor.execute(() -> {
+            SteamSearch steamSearch = new SteamSearch();
+            Scanner scanner = new Scanner(System.in);
             String gameName = textField.getText();
-            /*try {
-                gameStat = GameStat.getPriceHistory;
+            try {
+                String  = steamSearch.getLatestRevisionOf(textField);
+                System.out.println();
             } catch (IOException ioException) {
-                gameStat = "There was network error\n" + ioException.getMessage();
-            }*/
+                System.err.println("Network connection problem: " + ioException.getMessage());
+            }
             Platform.runLater(this::updateGamePrice);
         });
+    }
+
+    private String getLatestRevisionOf(String gameName) throws IOException {
+        try {
+            InputStream inputStream = connection.getInputStream();
+        }
     }
 
     private void updateGamePrice() {
