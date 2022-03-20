@@ -22,13 +22,13 @@ public class MainGUI extends Application {
     private final TabPane tabPane = new TabPane();
     private final Tab searchTab = new Tab("Search");
     private final Tab priceTab = new Tab("Price", new Label("Price information available:"));
+    private final VBox searchVbox = new VBox();
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
     private String gamePrice;
 
     public void start(Stage primaryStage) {
-        VBox searchVbox = new VBox();
         searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
         searchTab.setContent(searchVbox);
         tabPane.getTabs().add(searchTab);
@@ -48,9 +48,16 @@ public class MainGUI extends Application {
     }
 
     private void makeRedirectButton(ArrayList<String> gameNameArrayList) {
-        for (String gameName : gameNameArrayList) {
-            Button button = new Button(gameName);
-            searchTab.setContent(button);
+        if (gameNameArrayList.size() == 1) {
+            runSearch();
+        } else {
+            Label redirectLabel = new Label("Did you mean:");
+            searchVbox.getChildren().add(redirectLabel);
+            for (String gameName : gameNameArrayList) {
+                Button button = new Button(gameName);
+                searchVbox.getChildren().add(button);
+                button.setOnAction((event) -> runSearch());
+            }
         }
     }
 
