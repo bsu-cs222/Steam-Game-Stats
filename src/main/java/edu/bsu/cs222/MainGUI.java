@@ -22,25 +22,29 @@ public class MainGUI extends Application {
     private final TabPane tabPane = new TabPane();
     private final Tab searchTab = new Tab("Search");
     private final Tab priceTab = new Tab("Price", new Label("Price information available:"));
-    private final TextField textField = new TextField();
+    private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
     private String gamePrice;
 
     public void start(Stage primaryStage) {
-        searchTab.setContent(searchLabel);
-        searchTab.setContent(searchButton);
+        VBox searchVbox = new VBox();
+        searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
+        searchTab.setContent(searchVbox);
         tabPane.getTabs().add(searchTab);
         tabPane.getTabs().add(priceTab);
         VBox vBox = new VBox(tabPane);
         Scene scene = new Scene(vBox,800,600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
-        ArrayList<Integer> samplePriceHistory = new ArrayList<>();
-        samplePriceHistory.add(60);
-        samplePriceHistory.add(45);
-        makeGamePriceChart();
+        checkEmptyTextField();
+        searchButton.setOnAction((event) -> runSearch());
         primaryStage.show();
+    }
+
+    private void checkEmptyTextField(){
+        searchButton.setDisable(true);
+        searchTextField.textProperty().addListener((ov, t, t1) -> searchButton.setDisable(searchTextField.getText().equals("")));
     }
 
     private void makeRedirectButton(ArrayList<String> gameNameArrayList) {
@@ -52,13 +56,13 @@ public class MainGUI extends Application {
 
     private void runSearch() {
         searchButton.setDisable(true);
-        textField.setDisable(true);
+        searchTextField.setDisable(true);
         executor.execute(() -> {
             SteamSearch steamSearch = new SteamSearch();
             Scanner scanner = new Scanner(System.in);
-            String gameName = textField.getText();
+            String gameName = searchTextField.getText();
             try {
-                String  = steamSearch.getLatestRevisionOf(textField);
+                String  = steamSearch.getLatestRevisionOf(searchTextField);
                 System.out.println();
             } catch (IOException ioException) {
                 System.err.println("Network connection problem: " + ioException.getMessage());
@@ -74,9 +78,9 @@ public class MainGUI extends Application {
     }
 
     private void updateGamePrice() {
-        searchLabel.setText(gamePrice);
+        makeGamePriceChart();
         searchButton.setDisable(false);
-        textField.setDisable(false);
+        searchTextField.setDisable(false);
     }
 
     private void makeGamePriceChart() {
