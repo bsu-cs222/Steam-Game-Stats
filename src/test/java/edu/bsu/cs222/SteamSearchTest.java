@@ -12,7 +12,7 @@ public class SteamSearchTest {
     public void testParse() throws IOException {
         SteamSearch parser = new SteamSearch();
         InputStream testDataStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("");
-        String  = parser.parse(testDataStream);
+        String plains = parser.parse(testDataStream);
         Assertions.assertEquals("", );
     }
 }

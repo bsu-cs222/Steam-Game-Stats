@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class SteamSearch {
     public String parse(InputStream testDataStream) throws IOException {
-        JSONArray result = (JSONArray) JsonPath.read(testDataStream, "$...");
+        JSONArray result = (JSONArray) JsonPath.read(testDataStream, "$..plains");
         return result.get(0).toString();
     }
 }

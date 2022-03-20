@@ -1,0 +1,28 @@
+{
+  ".meta": {
+    "currency": "USD"
+  },
+  "data": {
+    "monsterhunterrise": {
+      "list": [
+        {
+          "price_new": 39.59,
+          "price_old": 59.99,
+          "price_cut": 34,
+          "url": "https://store.steampowered.com/app/1446780/",
+          "shop": {
+            "id": "steam",
+            "name": "Steam"
+          },
+          "drm": [
+            "steam",
+            "Denuvo Anti-tamper"
+          ]
+        }
+      ]
+    },
+    "urls": {
+        "game": "https://isthereanydeal.com/#/page:game/info?plain=monsterhunterrise"
+      }
+    }
+  }
