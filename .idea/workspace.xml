@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e504e0-4d6a-48ae-aebd-a75c89547504" name="Changes" comment="Began Search Bar Functionality">
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/bsu/cs222/SteamSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/bsu/cs222/SteamSearch.java" afterDir="false" />
+    <list default="true" id="84e504e0-4d6a-48ae-aebd-a75c89547504" name="Changes" comment="Implemented JSON in proper format">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/bsu/cs222/MainGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/bsu/cs222/MainGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/edu/bsu/cs222/SteamSearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/bsu/cs222/SteamSearchTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647803063318</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Implemented JSON in proper format">
+      <created>1647819823761</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1647819823761</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,6 +150,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Began Search Bar Functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Began Search Bar Functionality" />
+    <MESSAGE value="Implemented JSON in proper format" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented JSON in proper format" />
   </component>
 </project>

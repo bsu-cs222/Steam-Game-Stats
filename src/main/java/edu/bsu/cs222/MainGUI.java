@@ -12,6 +12,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.Executor;
@@ -26,7 +31,6 @@ public class MainGUI extends Application {
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
-    private String gamePrice;
 
     public void start(Stage primaryStage) {
         searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
@@ -65,22 +69,35 @@ public class MainGUI extends Application {
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
         executor.execute(() -> {
-            SteamSearch steamSearch = new SteamSearch();
-            Scanner scanner = new Scanner(System.in);
-            String gameName = searchTextField.getText();
-            try {
-                String  = steamSearch.getLatestRevisionOf(searchTextField);
-                System.out.println();
-            } catch (IOException ioException) {
-                System.err.println("Network connection problem: " + ioException.getMessage());
-            }
             Platform.runLater(this::updateGamePrice);
         });
     }
 
-    private String getLatestRevisionOf(String gameName) throws IOException {
+    public static void main(String[] args) {
+        MainGUI steamSearch = new MainGUI();
+        Scanner scanner = new Scanner(System.in);
+        String gameName = scanner.nextLine();
         try {
+            String plains = steamSearch.getLatestRevisionOf(gameName);
+            System.out.println();
+        } catch (IOException ioException) {
+            System.err.println("Network connection problem: " + ioException.getMessage());
+        }
+    }
+
+    private String getLatestRevisionOf(String gameName) throws IOException {
+        String urlString = String.format("https://isthereanydeal.com/#/page:game/info?plain=monsterhunterrise", gameName);
+        String encodedUrlString = URLEncoder.encode(urlString, Charset.defaultCharset());
+        try {
+            URL url = new URL(encodedUrlString);
+            URLConnection connection = url.openConnection();
+            connection.setRequestProperty("User-Agent", "Steam-Game-Stats/0.1");
             InputStream inputStream = connection.getInputStream();
+            SteamSearch parser = new SteamSearch();
+            String plains = parser.parse(inputStream);
+            return plains;
+        } catch (MalformedURLException malformedURLException) {
+            throw new RuntimeException(malformedURLException);
         }
     }
 

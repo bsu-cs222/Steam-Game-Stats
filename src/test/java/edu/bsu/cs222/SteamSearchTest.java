@@ -13,6 +13,6 @@ public class SteamSearchTest {
         SteamSearch parser = new SteamSearch();
         InputStream testDataStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("");
         String plains = parser.parse(testDataStream);
-        Assertions.assertEquals("", );
+        Assertions.assertEquals("monsterhunterrise", plains);
     }
 }
