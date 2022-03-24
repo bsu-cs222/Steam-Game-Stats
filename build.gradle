@@ -26,6 +26,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
     implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.6.0'
+    implementation 'org.glassfish.jersey.core:jersey-client:3.0.4'
+    implementation 'org.glassfish.jersey.media:html-json:3.0.4'
+    implementation 'org.glassfish.jersey.inject:jersey-hk2:3.0.4'
 }
 
 test {
