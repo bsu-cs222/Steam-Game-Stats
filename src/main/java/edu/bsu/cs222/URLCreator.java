@@ -21,14 +21,14 @@ public class URLCreator {
         // called api to give json data
 
         //insert below for method to call current price
-        jsonToString(response.readEntity(JSON.class));
 
 
-        return "";
+
+        return jsonToString(response.readEntity(String.class));
     }
 
-    private String jsonToString(JSON json) {
-        JSONArray jsonRedirects = JsonPath.read(json,"$..Price");
+    private String jsonToString(String json) {
+        JSONArray jsonRedirects = JsonPath.read(json,"$..price_new");
         String body = jsonRedirects.get(0).toString();
         return body;
     }
