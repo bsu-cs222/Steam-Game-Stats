@@ -2,7 +2,9 @@ package edu.bsu.cs222;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -27,8 +29,7 @@ public class MainGUI extends Application {
         searchTab.setContent(searchVbox);
         tabPane.getTabs().add(searchTab);
         tabPane.getTabs().add(priceTab);
-        VBox vBox = new VBox(tabPane);
-        Scene scene = new Scene(vBox,800,600);
+        Scene scene = new Scene(tabPane,800,600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
@@ -50,17 +51,17 @@ public class MainGUI extends Application {
     }
 
     private void updateGamePrice() {
-        makeGamePriceChart();
+        priceTab.setContent(makeGamePriceChart());
         searchLabel.setText("Price tab has been updated");
     }
 
-    private void makeGamePriceChart() {
+    private LineChart<Number, Number> makeGamePriceChart() {
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Month");
-        yAxis.setLabel("Price ($)");
         final LineChart<Number,Number> priceHistoryLineChart = new LineChart<>(xAxis, yAxis);
 
+        xAxis.setLabel("Month");
+        yAxis.setLabel("Price ($)");
         priceHistoryLineChart.setTitle("Price History");
         XYChart.Series steamSeries = new XYChart.Series();
         steamSeries.setName("Steam");
@@ -103,7 +104,7 @@ public class MainGUI extends Application {
         steamSeries.getData().add(new XYChart.Data(0, 19.99));
 
         priceHistoryLineChart.getData().add(steamSeries);
-        priceTab.setContent(priceHistoryLineChart);
+        return priceHistoryLineChart;
     }
 }
 
