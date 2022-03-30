@@ -36,7 +36,7 @@ public class MainGUI extends Application {
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
         String gameName = searchTextField.getText();
-        searchButton.setOnAction((event) -> runSearch(gameName));
+        searchButton.setOnAction((event) -> runSearch());
         primaryStage.show();
     }
 
@@ -45,11 +45,12 @@ public class MainGUI extends Application {
         searchTextField.textProperty().addListener((ov, t, t1) -> searchButton.setDisable(searchTextField.getText().equals("")));
     }
 
-    private void runSearch(String gameName) {
+    private void runSearch() {
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
+        String gameName = searchTextField.getText();
         executor.execute(() -> {
-            currentSteamPrice = Integer.parseInt(APIDataGetter.urlMaker(gameName));
+            currentSteamPrice = Integer.parseInt(APIDataGetter.main3(gameName));
             Platform.runLater(this::updateGamePrice);
         });
         searchButton.setDisable(false);
