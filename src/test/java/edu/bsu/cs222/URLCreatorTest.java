@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 public class URLCreatorTest {
     @Test
     public void urlTest() throws MalformedURLException {
-        URLCreator urlCreator = new URLCreator();
+        APIDataGetter urlCreator = new APIDataGetter();
         String result = urlCreator.urlMaker("Forza");
         Assertions.assertEquals("Forza", result);
     }

@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -50,13 +49,7 @@ public class MainGUI extends Application {
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
         executor.execute(() -> {
-            currentSteamPrice = 999;
-            /*try {
-                currentSteamPrice = ;
-            } catch (IOException ioException) {
-                searchLabel.setText("There was network error");
-                System.out.println(ioException.getMessage());
-            }*/
+            currentSteamPrice = Integer.parseInt(APIDataGetter.urlMaker(gameName));
             Platform.runLater(this::updateGamePrice);
         });
         searchButton.setDisable(false);
@@ -66,6 +59,7 @@ public class MainGUI extends Application {
     private void updateGamePrice() {
         priceTab.setContent(makeGamePriceBarGraph());
         searchLabel.setText("Price tab has been updated");
+
     }
 
     private StackedBarChart<String, Number> makeGamePriceBarGraph() {
