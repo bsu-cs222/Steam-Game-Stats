@@ -23,7 +23,7 @@ public class URLCreator {
         //insert below for method to call current price
 
 
-
+        //https://api.isthereanydeal.com/v01/game/overview/?key=&region=us&country=US&plains=&shop=steam&ids=app%2F460930%2Csub%2F37125%2Cbundle%2F7078&allowed=steam%2Cgog&optional=
         return jsonToString(response.readEntity(String.class));
     }
 
