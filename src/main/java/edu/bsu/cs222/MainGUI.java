@@ -4,36 +4,40 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class MainGUI extends Application {
+    public static final int SCENE_WIDTH = 800;
+    public static final int SCENE_HEIGHT = 600;
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final TabPane tabPane = new TabPane();
     private final Tab searchTab = new Tab("Search");
-    private final Tab priceTab = new Tab("Price", new Label("Price information available:"));
+    private final Tab priceTab = new Tab("Price", new Label("No price information available"));
     private final VBox searchVbox = new VBox();
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
+    private int currentSteamPrice;
 
     public void start(Stage primaryStage) {
         searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
         searchTab.setContent(searchVbox);
         tabPane.getTabs().add(searchTab);
         tabPane.getTabs().add(priceTab);
-        Scene scene = new Scene(tabPane,800,600);
+        Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
-        searchButton.setOnAction((event) -> runSearch());
+        String gameName = searchTextField.getText();
+        searchButton.setOnAction((event) -> runSearch(gameName));
         primaryStage.show();
     }
 
@@ -42,69 +46,45 @@ public class MainGUI extends Application {
         searchTextField.textProperty().addListener((ov, t, t1) -> searchButton.setDisable(searchTextField.getText().equals("")));
     }
 
-    private void runSearch() {
+    private void runSearch(String gameName) {
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
-        executor.execute(() -> Platform.runLater(this::updateGamePrice));
+        executor.execute(() -> {
+            currentSteamPrice = 999;
+            /*try {
+                currentSteamPrice = ;
+            } catch (IOException ioException) {
+                searchLabel.setText("There was network error");
+                System.out.println(ioException.getMessage());
+            }*/
+            Platform.runLater(this::updateGamePrice);
+        });
         searchButton.setDisable(false);
         searchTextField.setDisable(false);
     }
 
     private void updateGamePrice() {
-        priceTab.setContent(makeGamePriceChart());
+        priceTab.setContent(makeGamePriceBarGraph());
         searchLabel.setText("Price tab has been updated");
     }
 
-    private LineChart<Number, Number> makeGamePriceChart() {
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        final LineChart<Number,Number> priceHistoryLineChart = new LineChart<>(xAxis, yAxis);
+    private StackedBarChart<String, Number> makeGamePriceBarGraph() {
+        CategoryAxis xAxis = new CategoryAxis();
 
-        xAxis.setLabel("Month");
+        xAxis.setCategories(FXCollections.observableArrayList(Arrays.asList
+                ("Steam"))); //list can be edited to include multiple stores in the future
+
+        xAxis.setLabel("Store");
+        NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Price ($)");
-        priceHistoryLineChart.setTitle("Price History");
-        XYChart.Series steamSeries = new XYChart.Series();
-        steamSeries.setName("Steam");
-        //sample graph based on Fallout 4 TODO make a for loop to cycle through game price changes and make data points
-        steamSeries.getData().add(new XYChart.Data(-12, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-11.75, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-11.75, 14.99));
-        steamSeries.getData().add(new XYChart.Data(-11.5, 14.99));
-        steamSeries.getData().add(new XYChart.Data(-11.5, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-10.5, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-10.5, 14.99));
-        steamSeries.getData().add(new XYChart.Data(-10, 14.99));
-        steamSeries.getData().add(new XYChart.Data(-10, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-9.5, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-9.5, 11.99));
-        steamSeries.getData().add(new XYChart.Data(-8, 11.99));
-        steamSeries.getData().add(new XYChart.Data(-8, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-7.9, 29.99));
-        steamSeries.getData().add(new XYChart.Data(-7.9, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-7, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-7, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-6, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-6, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-4.75, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-4.75, 4.99));
-        steamSeries.getData().add(new XYChart.Data(-4, 4.99));
-        steamSeries.getData().add(new XYChart.Data(-4, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-3, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-3, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-2.75, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-2.75, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-2, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-2, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-1.5, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-1.5, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-1, 19.99));
-        steamSeries.getData().add(new XYChart.Data(-1, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-.75, 7.99));
-        steamSeries.getData().add(new XYChart.Data(-.75, 19.99));
-        steamSeries.getData().add(new XYChart.Data(0, 19.99));
-
-        priceHistoryLineChart.getData().add(steamSeries);
-        return priceHistoryLineChart;
+        StackedBarChart<String, Number> storePriceSummaryChart = new StackedBarChart<>(xAxis, yAxis);
+        storePriceSummaryChart.setTitle("Store Price Summary");
+        storePriceSummaryChart.setCategoryGap(500); //TODO make this value change with the size of the window
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("Current");
+        series1.getData().add(new XYChart.Data<>("Steam", currentSteamPrice));
+        storePriceSummaryChart.getData().add(series1);
+        return storePriceSummaryChart;
     }
 }
 
