@@ -25,6 +25,7 @@ public class MainGUI extends Application {
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
     private int currentSteamPrice;
+    private int lowSteamPrice;
 
     public void start(Stage primaryStage) {
         searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
@@ -51,6 +52,7 @@ public class MainGUI extends Application {
         String gameName = searchTextField.getText();
         executor.execute(() -> {
             currentSteamPrice = Integer.parseInt(APIDataGetter.main3(gameName));
+            //lowSteamPrice = Integer.parseInt()
             Platform.runLater(this::updateGamePrice);
         });
         searchButton.setDisable(false);
@@ -78,6 +80,9 @@ public class MainGUI extends Application {
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Current");
         series1.getData().add(new XYChart.Data<>("Steam", currentSteamPrice));
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series2.setName("Low");
+        series2.getData().add(new XYChart.Data<>("Steam", lowSteamPrice));
         storePriceSummaryChart.getData().add(series1);
         return storePriceSummaryChart;
     }
