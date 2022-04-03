@@ -10,7 +10,7 @@ import net.minidev.json.JSONArray;
 import static edu.bsu.cs222.URLCreator.urlDesigner;
 
 public class APIDataGetter {
-    public static String urlMaker(String input){
+    public static String currentPriceData(String input){
         Client client = ClientBuilder.newClient();
         Response response = client.target(urlDesigner(input))
                 .request(MediaType.APPLICATION_JSON)

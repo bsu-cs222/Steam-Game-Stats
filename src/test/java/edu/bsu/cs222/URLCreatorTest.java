@@ -9,7 +9,7 @@ public class URLCreatorTest {
     @Test
     public void urlTest() throws MalformedURLException {
         APIDataGetter urlCreator = new APIDataGetter();
-        String result = urlCreator.urlMaker("Forza");
+        String result = urlCreator.currentPriceData("Forza");
         Assertions.assertEquals("Forza", result);
     }
 }
