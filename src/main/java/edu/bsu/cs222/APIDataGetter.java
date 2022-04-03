@@ -19,7 +19,8 @@ public class APIDataGetter {
         //https://api.isthereanydeal.com/v01/game/overview/?key=&region=us&country=US&plains=&shop=steam&ids=app%2F460930%2Csub%2F37125%2Cbundle%2F7078&allowed=steam%2Cgog&optional=
         String jsonPrice = jsonToString(response.readEntity(String.class));
         double priceAsDouble = Double.parseDouble(jsonPrice);
-        String priceCeil = jsonPrice.replace(".0","");
+        String priceCeil = String.valueOf(Math.ceil(priceAsDouble));
+        priceCeil = priceCeil.replace(".0","");
         return priceCeil;
     }
     public static String historicalLowData(String input){
