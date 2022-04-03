@@ -51,7 +51,7 @@ public class MainGUI extends Application {
         searchTextField.setDisable(true);
         String gameName = searchTextField.getText();
         executor.execute(() -> {
-            currentSteamPrice = Integer.parseInt(APIDataGetter.main3(gameName));
+            currentSteamPrice = Integer.parseInt(APIDataGetter.historicalLowData(gameName));
             //lowSteamPrice = Integer.parseInt()
             Platform.runLater(this::updateGamePrice);
         });
