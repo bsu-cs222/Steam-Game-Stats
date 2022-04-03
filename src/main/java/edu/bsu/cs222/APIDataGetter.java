@@ -10,6 +10,9 @@ import net.minidev.json.JSONArray;
 import static edu.bsu.cs222.URLCreator.urlDesigner;
 
 public class APIDataGetter {
+    public static void main(String[] args) {
+        historicalLowData("falloutiv");
+    }
     public static String currentPriceData(String input){
         Client client = ClientBuilder.newClient();
         Response response = client.target(urlDesigner(input))
@@ -32,6 +35,8 @@ public class APIDataGetter {
         double priceAsDouble = Double.parseDouble(jsonPrice);
         String priceCeil = String.valueOf(Math.ceil(priceAsDouble));
         priceCeil = priceCeil.replace(".0","");
+        String title = "Forzaii";
+        System.out.println(title.compareTo("forzaiii"));
         return priceCeil;
     }
 
@@ -44,5 +49,9 @@ public class APIDataGetter {
         JSONArray jsonRedirectsToLowest = JsonPath.read(json, "$..lowest");
         JSONArray jsonLowestToPrice = JsonPath.read(jsonRedirectsToLowest,"$..price");
         return jsonLowestToPrice.get(0).toString();
+    }
+    public static void appIDToPicture(String title){
+        URLCreator urlCreator = new URLCreator();
+        JSONArray jsonRedirectsAppId = JsonPath.read(urlCreator.gameIDGetter(),String.format("$..%s",title));
     }
 }
