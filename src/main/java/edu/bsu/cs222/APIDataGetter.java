@@ -25,6 +25,13 @@ public class APIDataGetter {
         System.out.println(price2);
         return price2;
     }
+    public String historicalLowData(String input){
+        Client client = ClientBuilder.newClient();
+        Response response = client.target(urlDesigner(input))
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+    }
 
     private static String jsonToString(String json) {
         JSONArray jsonRedirects = JsonPath.read(json,"$..price_new");
