@@ -77,13 +77,13 @@ public class MainGUI extends Application {
         StackedBarChart<String, Number> storePriceSummaryChart = new StackedBarChart<>(xAxis, yAxis);
         storePriceSummaryChart.setTitle("Store Price Summary");
         storePriceSummaryChart.setCategoryGap(500); //TODO make this value change with the size of the window
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("Current");
-        series1.getData().add(new XYChart.Data<>("Steam", currentSteamPrice));
-        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-        series2.setName("Low");
-        series2.getData().add(new XYChart.Data<>("Steam", lowSteamPrice));
-        storePriceSummaryChart.getData().add(series1);
+        XYChart.Series<String, Number> lowestPriceSeries = new XYChart.Series<>();
+        lowestPriceSeries.setName("Low");
+        lowestPriceSeries.getData().add(new XYChart.Data<>("Steam", lowSteamPrice));
+        XYChart.Series<String, Number> currentPriceSeries = new XYChart.Series<>();
+        currentPriceSeries.setName("Current");
+        currentPriceSeries.getData().add(new XYChart.Data<>("Steam", currentSteamPrice-lowSteamPrice));
+        storePriceSummaryChart.getData().addAll(lowestPriceSeries,currentPriceSeries);
         return storePriceSummaryChart;
     }
 }
