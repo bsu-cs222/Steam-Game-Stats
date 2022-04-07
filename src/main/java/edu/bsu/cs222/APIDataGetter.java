@@ -9,9 +9,9 @@ import static edu.bsu.cs222.URLCreator.urlSearch;
 
 public class APIDataGetter {
     static StoreSearch storeSearch = new StoreSearch();
-    public static Integer currentPriceData(String url, String store){
+    public static Integer currentPriceData(String title, String store){
         Client client = ClientBuilder.newClient();
-        Response response = client.target(urlSearch(url, store))
+        Response response = client.target(urlSearch(title, store))
                 .request(MediaType.APPLICATION_JSON)
                 .get();
         // called api to give json data
@@ -20,9 +20,9 @@ public class APIDataGetter {
         return Integer.parseInt(parseToIntegerFormat(jsonPrice));
     }
 
-    public static Integer historicalLowData(String url, String store){
+    public static Integer historicalLowData(String title, String store){
         Client client = ClientBuilder.newClient();
-        Response response = client.target(urlSearch(url,store))
+        Response response = client.target(urlSearch(title,store))
                 .request(MediaType.APPLICATION_JSON)
                 .get();
         String jsonPrice = storeSearch.jsonToLowest(response.readEntity(String.class));
