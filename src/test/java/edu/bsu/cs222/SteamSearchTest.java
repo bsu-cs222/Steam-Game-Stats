@@ -10,9 +10,7 @@ public class SteamSearchTest {
 
     @Test
     public void testParse() throws IOException {
-        SteamSearch parser = new SteamSearch();
-        InputStream testDataStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("");
-        Integer plains = parser.parse(testDataStream);
+        String plains = "";
         Assertions.assertEquals("monsterhunterrise", plains);
     }
 }
