@@ -10,29 +10,29 @@ import net.minidev.json.JSONArray;
 import static edu.bsu.cs222.URLCreator.urlDesigner;
 
 public class APIDataGetter {
-    public static String currentPriceData(String input){
+    public static Integer currentPriceData(String title){
         Client client = ClientBuilder.newClient();
-        Response response = client.target(urlDesigner(input))
+        Response response = client.target(urlDesigner(title))
                 .request(MediaType.APPLICATION_JSON)
                 .get();
         // called api to give json data
         //https://api.isthereanydeal.com/v01/game/overview/?key=&region=us&country=US&plains=&shop=steam&ids=app%2F460930%2Csub%2F37125%2Cbundle%2F7078&allowed=steam%2Cgog&optional=
         String jsonPrice = jsonToString(response.readEntity(String.class));
-        double priceAsDouble = Double.parseDouble(jsonPrice);
-        String priceCeil = String.valueOf(Math.ceil(priceAsDouble));
-        priceCeil = priceCeil.replace(".0","");
-        return priceCeil;
+        return Integer.parseInt(parseToIntegerFormat(jsonPrice));
     }
-    public static String historicalLowData(String input){
+    public static String parseToIntegerFormat(String string){
+        double priceAsDouble = Double.parseDouble(string);
+        String priceCeiling = String.valueOf(Math.ceil(priceAsDouble));
+        priceCeiling = priceCeiling.replace(".0","");
+        return priceCeiling;
+    }
+    public static Integer historicalLowData(String title){
         Client client = ClientBuilder.newClient();
-        Response response = client.target(urlDesigner(input))
+        Response response = client.target(urlDesigner(title))
                 .request(MediaType.APPLICATION_JSON)
                 .get();
         String jsonPrice = jsonToLowest(response.readEntity(String.class));
-        double priceAsDouble = Double.parseDouble(jsonPrice);
-        String priceCeil = String.valueOf(Math.ceil(priceAsDouble));
-        priceCeil = priceCeil.replace(".0","");
-        return priceCeil;
+        return Integer.parseInt(parseToIntegerFormat(jsonPrice));
     }
 
     private static String jsonToString(String json) {
