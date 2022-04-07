@@ -2,7 +2,8 @@ package edu.bsu.cs222;
 
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
-public class SteamSearch {
+public class StoreSearch {
+
     public String jsonToString(String json) {
         JSONArray jsonRedirectsCurrent = JsonPath.read(json,"$..price");
         JSONArray jsonCurrentToPrice = JsonPath.read(jsonRedirectsCurrent,"$..price");
