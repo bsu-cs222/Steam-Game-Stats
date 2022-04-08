@@ -24,8 +24,10 @@ public class MainGUI extends Application {
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
-    private int currentSteamPrice;
-    private int lowSteamPrice;
+    private int currentSteamPrice = 0;
+    private int lowSteamPrice = 0;
+    private int currentGogPrice = 0;
+    private int lowGogPrice = 0;
 
     public void start(Stage primaryStage) {
         searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
@@ -51,8 +53,10 @@ public class MainGUI extends Application {
         searchTextField.setDisable(true);
         String gameName = searchTextField.getText();
         executor.execute(() -> {
-            currentSteamPrice = APIDataGetter.currentPriceData(gameName, "gog");
-            lowSteamPrice = APIDataGetter.historicalLowData(gameName, "gog");
+            currentSteamPrice = APIDataGetter.currentPriceData(gameName, "steam");
+            lowSteamPrice = APIDataGetter.historicalLowData(gameName, "steam");
+            currentGogPrice = APIDataGetter.currentPriceData(gameName,"gog");
+            lowGogPrice = APIDataGetter.currentPriceData(gameName,"gog");
             Platform.runLater(this::updateGamePrice);
         });
         searchButton.setDisable(false);
@@ -69,22 +73,23 @@ public class MainGUI extends Application {
         CategoryAxis xAxis = new CategoryAxis();
 
         xAxis.setCategories(FXCollections.observableArrayList(Arrays.asList
-                ("Steam"))); //list can be edited to include multiple stores in the future
+                ("Steam", "gog"))); //list can be edited to include multiple stores in the future
 
         xAxis.setLabel("Store");
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Price ($)");
         StackedBarChart<String, Number> storePriceSummaryChart = new StackedBarChart<>(xAxis, yAxis);
         storePriceSummaryChart.setTitle("Store Price Summary");
-        storePriceSummaryChart.setCategoryGap(500); //TODO make this value change with the size of the window
+        storePriceSummaryChart.setCategoryGap(SCENE_WIDTH/3);
         XYChart.Series<String, Number> lowestPriceSeries = new XYChart.Series<>();
         lowestPriceSeries.setName("Low");
         lowestPriceSeries.getData().add(new XYChart.Data<>("Steam", lowSteamPrice));
+        lowestPriceSeries.getData().add(new XYChart.Data<>("gog",lowGogPrice));
         XYChart.Series<String, Number> currentPriceSeries = new XYChart.Series<>();
         currentPriceSeries.setName("Current");
         currentPriceSeries.getData().add(new XYChart.Data<>("Steam", currentSteamPrice-lowSteamPrice));
+        currentPriceSeries.getData().add(new XYChart.Data<>("gog", currentGogPrice-lowGogPrice));
         storePriceSummaryChart.getData().addAll(lowestPriceSeries,currentPriceSeries);
         return storePriceSummaryChart;
     }
 }
-

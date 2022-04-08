@@ -6,12 +6,24 @@ public class StoreSearch {
 
     public String jsonToString(String json) {
         JSONArray jsonRedirectsCurrent = JsonPath.read(json,"$..price");
-        JSONArray jsonCurrentToPrice = JsonPath.read(jsonRedirectsCurrent,"$..price");
-        return jsonCurrentToPrice.get(0).toString();
+        String price;
+        if(jsonRedirectsCurrent.toString().equals("[null]")) {
+            price = "-1u";
+        } else {
+            JSONArray jsonCurrentToPrice = JsonPath.read(jsonRedirectsCurrent, "$..price");
+            price = jsonCurrentToPrice.get(0).toString();
+        }
+        return price;
     }
     public String jsonToLowest(String json) {
         JSONArray jsonRedirectsToLowest = JsonPath.read(json, "$..lowest");
-        JSONArray jsonLowestToPrice = JsonPath.read(jsonRedirectsToLowest,"$..price");
-        return jsonLowestToPrice.get(0).toString();
+        String price;
+        if(jsonRedirectsToLowest.toString().equals("[null]")) {
+            price = "-1";
+        } else {
+            JSONArray jsonCurrentToPrice = JsonPath.read(jsonRedirectsToLowest, "$..price");
+            price = jsonCurrentToPrice.get(0).toString();
+        }
+        return price;
     }
 }
