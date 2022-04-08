@@ -40,7 +40,6 @@ public class MainGUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
-        String gameName = searchTextField.getText();
         searchButton.setOnAction((event) -> runSearch());
         primaryStage.show();
     }
@@ -66,13 +65,12 @@ public class MainGUI extends Application {
     }
 
     private void updateGamePrice() {
-        if (currentSteamPrice == -1){
-            searchLabel.setText("Game Not Found");
+        priceTab.setContent(makeGamePriceBarGraph());
+        if (currentSteamPrice == -1||currentGogPrice == -1){
+            searchLabel.setText("Price Data Incomplete");
         } else {
-            priceTab.setContent(makeGamePriceBarGraph());
-            searchLabel.setText("Price tab has been updated");
+            searchLabel.setText("Price Tab Has Been Updated");
         }
-
     }
 
     private StackedBarChart<String, Number> makeGamePriceBarGraph() {
