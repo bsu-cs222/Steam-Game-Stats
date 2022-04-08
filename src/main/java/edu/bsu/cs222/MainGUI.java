@@ -64,8 +64,12 @@ public class MainGUI extends Application {
     }
 
     private void updateGamePrice() {
-        priceTab.setContent(makeGamePriceBarGraph());
-        searchLabel.setText("Price tab has been updated");
+        if (currentSteamPrice == -1){
+            searchLabel.setText("Game Not Found");
+        } else {
+            priceTab.setContent(makeGamePriceBarGraph());
+            searchLabel.setText("Price tab has been updated");
+        }
 
     }
 
