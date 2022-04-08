@@ -8,7 +8,7 @@ public class StoreSearch {
         JSONArray jsonRedirectsCurrent = JsonPath.read(json,"$..price");
         String price;
         if(jsonRedirectsCurrent.toString().equals("[null]")) {
-            price = "-1u";
+            price = "-1";
         } else {
             JSONArray jsonCurrentToPrice = JsonPath.read(jsonRedirectsCurrent, "$..price");
             price = jsonCurrentToPrice.get(0).toString();
