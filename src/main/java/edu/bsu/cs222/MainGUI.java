@@ -31,6 +31,8 @@ public class MainGUI extends Application {
 
     public void start(Stage primaryStage) {
         searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
+        priceTab.setClosable(false);
+        searchTab.setClosable(false);
         searchTab.setContent(searchVbox);
         tabPane.getTabs().add(searchTab);
         tabPane.getTabs().add(priceTab);
