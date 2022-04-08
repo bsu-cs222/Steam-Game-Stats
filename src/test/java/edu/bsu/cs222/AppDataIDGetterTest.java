@@ -12,7 +12,8 @@ public class AppDataIDGetterTest {
 //    }
     @Test
     public void priceTest (){
-        Integer result = APIDataGetter.currentPriceData("falloutiv");
+        APIDataGetter apiDataGetter = new APIDataGetter();
+        Integer result = apiDataGetter.currentPriceData("falloutiv", "steam");
         Assertions.assertEquals(10, result);
     }
 }
