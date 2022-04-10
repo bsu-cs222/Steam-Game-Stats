@@ -85,7 +85,7 @@ public class MainGUI extends Application {
         yAxis.setLabel("Price ($)");
         StackedBarChart<String, Number> storePriceSummaryChart = new StackedBarChart<>(xAxis, yAxis);
         storePriceSummaryChart.setTitle("Store Price Summary");
-        storePriceSummaryChart.setCategoryGap(SCENE_WIDTH/3);
+        storePriceSummaryChart.setCategoryGap(SCENE_WIDTH/3f);
         XYChart.Series<String, Number> lowestPriceSeries = new XYChart.Series<>();
         lowestPriceSeries.setName("Low");
         lowestPriceSeries.getData().add(new XYChart.Data<>("Steam", lowSteamPrice));

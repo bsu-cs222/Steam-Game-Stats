@@ -2,8 +2,8 @@ package edu.bsu.cs222;
 
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
-public class StoreSearch {
 
+public class StoreSearch {
     public String jsonToString(String json) {
         JSONArray jsonRedirectsCurrent = JsonPath.read(json,"$..price");
         String price;
@@ -15,6 +15,7 @@ public class StoreSearch {
         }
         return price;
     }
+
     public String jsonToLowest(String json) {
         JSONArray jsonRedirectsToLowest = JsonPath.read(json, "$..lowest");
         String price;
