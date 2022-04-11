@@ -40,25 +40,24 @@ public class MainGUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
-        searchButton.setOnAction((event) -> runSearch());
+        searchButton.setOnAction((event) -> runSearch(searchTextField.getText()));
         primaryStage.show();
     }
 
-    private void checkEmptyTextField(){
+    private void checkEmptyTextField() {
         searchButton.setDisable(true);
         searchTextField.textProperty().addListener((ov, t, t1) -> searchButton.setDisable(searchTextField.getText().equals("")));
     }
 
-    private void runSearch() {
+    private void runSearch(String gameName) {
         APIDataGetter apiDataGetter = new APIDataGetter();
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
-        String gameName = searchTextField.getText();
         executor.execute(() -> {
             currentSteamPrice = apiDataGetter.currentPriceData(gameName, "steam");
             lowSteamPrice = apiDataGetter.historicalLowData(gameName, "steam");
             currentGogPrice = apiDataGetter.currentPriceData(gameName,"gog");
-            lowGogPrice = apiDataGetter.currentPriceData(gameName,"gog");
+            lowGogPrice = apiDataGetter.historicalLowData(gameName,"gog");
             Platform.runLater(this::updateGamePrice);
         });
         searchButton.setDisable(false);
@@ -67,7 +66,7 @@ public class MainGUI extends Application {
 
     private void updateGamePrice() {
         priceTab.setContent(makeGamePriceBarGraph());
-        if (currentSteamPrice == -1||currentGogPrice == -1){
+        if (currentSteamPrice == -1||currentGogPrice == -1) {
             searchLabel.setText("Price Data Incomplete");
         } else {
             searchLabel.setText("Price Tab Has Been Updated");
@@ -76,10 +75,7 @@ public class MainGUI extends Application {
 
     private StackedBarChart<String, Number> makeGamePriceBarGraph() {
         CategoryAxis xAxis = new CategoryAxis();
-
-        xAxis.setCategories(FXCollections.observableArrayList(Arrays.asList
-                ("Steam", "gog"))); //list can be edited to include multiple stores in the future
-
+        xAxis.setCategories(FXCollections.observableArrayList(Arrays.asList("Steam", "gog")));
         xAxis.setLabel("Store");
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Price ($)");

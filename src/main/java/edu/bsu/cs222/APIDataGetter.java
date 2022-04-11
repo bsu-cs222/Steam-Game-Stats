@@ -10,20 +10,16 @@ public class APIDataGetter {
     URLCreator urlCreator = new URLCreator();
     public Integer currentPriceData(String title, String store){
         Client client = ClientBuilder.newClient();
-        Response response = client.target(urlCreator.urlSearch(title, store))
-                .request(MediaType.APPLICATION_JSON)
-                .get();
+        Response response = client.target(urlCreator.urlSearch(title, store)).request(MediaType.APPLICATION_JSON).get();
         // called api to give json data
-        //https://api.isthereanydeal.com/v01/game/overview/?key=&region=us&country=US&plains=&shop=steam&ids=app%2F460930%2Csub%2F37125%2Cbundle%2F7078&allowed=steam%2Cgog&optional=
+        // https://api.isthereanydeal.com/v01/game/overview/?key=&region=us&country=US&plains=&shop=steam&ids=app%2F460930%2Csub%2F37125%2Cbundle%2F7078&allowed=steam%2Cgog&optional=
         String jsonPrice = storeSearch.jsonToString(response.readEntity(String.class));
         return Integer.parseInt(parseToIntegerFormat(jsonPrice));
     }
 
     public Integer historicalLowData(String title, String store){
         Client client = ClientBuilder.newClient();
-        Response response = client.target(urlCreator.urlSearch(title,store))
-                .request(MediaType.APPLICATION_JSON)
-                .get();
+        Response response = client.target(urlCreator.urlSearch(title,store)).request(MediaType.APPLICATION_JSON).get();
         String jsonPrice = storeSearch.jsonToLowest(response.readEntity(String.class));
         return Integer.parseInt(parseToIntegerFormat(jsonPrice));
     }

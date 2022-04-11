@@ -7,7 +7,7 @@ public class StoreSearch {
     public String jsonToString(String json) {
         JSONArray jsonRedirectsCurrent = JsonPath.read(json,"$..price");
         String price;
-        if(jsonRedirectsCurrent.toString().equals("[null]")) {
+        if (jsonRedirectsCurrent.toString().equals("[null]")) {
             price = "-1";
         } else {
             JSONArray jsonCurrentToPrice = JsonPath.read(jsonRedirectsCurrent, "$..price");
@@ -19,7 +19,7 @@ public class StoreSearch {
     public String jsonToLowest(String json) {
         JSONArray jsonRedirectsToLowest = JsonPath.read(json, "$..lowest");
         String price;
-        if(jsonRedirectsToLowest.toString().equals("[null]")) {
+        if (jsonRedirectsToLowest.toString().equals("[null]")) {
             price = "-1";
         } else {
             JSONArray jsonCurrentToPrice = JsonPath.read(jsonRedirectsToLowest, "$..price");
