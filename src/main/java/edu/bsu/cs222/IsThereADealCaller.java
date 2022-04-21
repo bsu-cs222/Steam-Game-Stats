@@ -5,7 +5,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-public class APIDataGetter {
+public class IsThereADealCaller {
     StoreSearch storeSearch = new StoreSearch();
     URLCreator urlCreator = new URLCreator();
     public Integer currentPriceData(String title, String store){
@@ -29,5 +29,11 @@ public class APIDataGetter {
         String priceCeiling = String.valueOf(Math.ceil(priceAsDouble));
         priceCeiling = priceCeiling.replace(".0","");
         return priceCeiling;
+    }
+    public String StoreReviews(String title){
+        Client client = ClientBuilder.newClient();
+        Response response = client.target(urlCreator.returnsReviews(title)).request(MediaType.TEXT_PLAIN_TYPE).get();
+        String jsonReview = storeSearch.jsonToReview(response.readEntity(String.class));
+        return jsonReview;
     }
 }

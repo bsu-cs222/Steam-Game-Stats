@@ -27,4 +27,8 @@ public class StoreSearch {
         }
         return price;
     }
+    public String jsonToReview(String json){
+        JSONArray jsonRedirectsToReview = JsonPath.read(json,"$..reviews");
+        return jsonRedirectsToReview.toString();
+    }
 }

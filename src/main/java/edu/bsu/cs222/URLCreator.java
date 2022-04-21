@@ -22,8 +22,9 @@ public class URLCreator {
         String[] part = numberTitle.split("(?<=\\D)(?=\\d)");
         String romanTitle;
         romanTitle = part[0] + numberToRoman(Integer.parseInt(part[1]));
-
-
         return String.format("https://api.isthereanydeal.com/v01/game/overview/?key=420d3d4cd304e25e8b0ac4e1a58dfa406283946d&region=us&country=US&plains=%s&shop=%s&allowed=%s",romanTitle, store, store);
+    }
+    public String returnsReviews(String title){
+        return String.format("https://api.isthereanydeal.com/v01/game/info/?key=420d3d4cd304e25e8b0ac4e1a58dfa406283946d&plains=%s",title);
     }
 }
