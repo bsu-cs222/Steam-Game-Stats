@@ -20,6 +20,7 @@ public class MainGUI extends Application {
     private final TabPane tabPane = new TabPane();
     private final Tab searchTab = new Tab("Search");
     private final Tab priceTab = new Tab("Price", new Label("No price information available"));
+    private final Tab reviewTab = new Tab("Reviews", new Label("No review information available"));
     private final VBox searchVbox = new VBox();
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
@@ -30,18 +31,22 @@ public class MainGUI extends Application {
     private int lowGogPrice = 0;
 
     public void start(Stage primaryStage) {
-        searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
-        priceTab.setClosable(false);
-        searchTab.setClosable(false);
-        searchTab.setContent(searchVbox);
-        tabPane.getTabs().add(searchTab);
-        tabPane.getTabs().add(priceTab);
+        addTabsToPane();
         Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
         searchButton.setOnAction((event) -> runSearch(searchTextField.getText()));
         primaryStage.show();
+    }
+
+    private void addTabsToPane() {
+        searchVbox.getChildren().addAll(searchTextField, searchButton, searchLabel);
+        searchTab.setClosable(false);
+        searchTab.setContent(searchVbox);
+        priceTab.setClosable(false);
+        reviewTab.setClosable(false);
+        tabPane.getTabs().addAll(searchTab, priceTab, reviewTab);
     }
 
     private void checkEmptyTextField() {
