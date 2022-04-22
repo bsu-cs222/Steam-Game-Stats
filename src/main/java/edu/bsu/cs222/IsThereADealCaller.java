@@ -37,9 +37,9 @@ public class IsThereADealCaller {
         JSONArray updatesStrings = storeSearch.jsonToReview(response.readEntity(String.class));
         String renameStuff = updatesStrings.get(0).toString();
         String[] part = renameStuff.split(",",0);
-        totalReview = part[1];
-        percentageReview = part[0];
-        textReview = part[2];
+        totalReview = part[1].replace("total=","");
+        percentageReview = part[0].replace("{perc_positive=","");
+        textReview = part[2].replace("text=","");
     }
 
 
