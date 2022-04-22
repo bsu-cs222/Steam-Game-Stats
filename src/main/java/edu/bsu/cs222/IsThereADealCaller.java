@@ -30,7 +30,7 @@ public class IsThereADealCaller {
         priceCeiling = priceCeiling.replace(".0","");
         return priceCeiling;
     }
-    public String StoreReviews(String title){
+    public String storeReviews(String title){
         Client client = ClientBuilder.newClient();
         Response response = client.target(urlCreator.returnsReviews(title)).request(MediaType.TEXT_PLAIN_TYPE).get();
         String jsonReview = storeSearch.jsonToReview(response.readEntity(String.class));

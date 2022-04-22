@@ -18,17 +18,19 @@ public class MainGUI extends Application {
     public static final int SCENE_HEIGHT = 600;
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final TabPane tabPane = new TabPane();
-    private final Tab searchTab = new Tab("Search");
-    private final Tab priceTab = new Tab("Price", new Label("No price information available"));
-    private final Tab reviewTab = new Tab("Reviews", new Label("No review information available"));
     private final VBox searchVbox = new VBox();
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
+    private final Tab searchTab = new Tab("Search");
+    private final Tab priceTab = new Tab("Price", new Label("No price information available"));
+    private final Label reviewLabel = new Label("No review information available");
+    private final Tab reviewTab = new Tab("Reviews", reviewLabel);
     private int currentSteamPrice = 0;
     private int lowSteamPrice = 0;
     private int currentGogPrice = 0;
     private int lowGogPrice = 0;
+    private String reviewString;
 
     public void start(Stage primaryStage) {
         addTabsToPane();
@@ -63,10 +65,16 @@ public class MainGUI extends Application {
             lowSteamPrice = isThereADealCaller.historicalLowData(gameName, "steam");
             currentGogPrice = isThereADealCaller.currentPriceData(gameName,"gog");
             lowGogPrice = isThereADealCaller.historicalLowData(gameName,"gog");
-            Platform.runLater(this::updateGamePrice);
+            reviewString = isThereADealCaller.storeReviews(gameName);
+            Platform.runLater(this::updateTabInformation);
         });
         searchButton.setDisable(false);
         searchTextField.setDisable(false);
+    }
+
+    private void updateTabInformation() {
+        updateGamePrice();
+        updateReviewTab();
     }
 
     private void updateGamePrice() {
@@ -76,6 +84,10 @@ public class MainGUI extends Application {
         } else {
             searchLabel.setText("Price Tab Has Been Updated");
         }
+    }
+
+    private void updateReviewTab() {
+        reviewLabel.setText(reviewString);
     }
 
     private StackedBarChart<String, Number> makeGamePriceBarGraph() {
