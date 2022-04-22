@@ -37,7 +37,6 @@ public class MainGUI extends Application {
     private int lowSteamPrice = 0;
     private int currentGogPrice = 0;
     private int lowGogPrice = 0;
-    private String reviewString;
 
     IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
 
@@ -96,7 +95,7 @@ public class MainGUI extends Application {
     }
 
     private void updateReviewTab() {
-        reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.percentageReview, isThereADealCaller.textReview, isThereADealCaller.totalReview);
+        String reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.percentageReview, isThereADealCaller.textReview, isThereADealCaller.totalReview);
         reviewLabel.setFont(Font.font("Arial", FontWeight.NORMAL,20));
         reviewLabel.setText(reviewString);
     }
