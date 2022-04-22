@@ -29,6 +29,11 @@ public class StoreSearch {
     }
     public String jsonToReview(String json){
         JSONArray jsonRedirectsToReview = JsonPath.read(json,"$..steam");
-        return jsonRedirectsToReview.toString();
+        JSONArray jsonRedirectsToPerc = JsonPath.read(jsonRedirectsToReview,"$..perc_positive");
+        JSONArray jsonRedirectsToTotal = JsonPath.read(jsonRedirectsToReview,"$..total");
+        JSONArray jsonRedirectsToText = JsonPath.read(jsonRedirectsToReview,"$..text");
+        String firstReview = jsonRedirectsToText.toString()+"\n"+jsonRedirectsToTotal.toString()+"\n"+jsonRedirectsToPerc.toString();
+        String secondReview = firstReview.replaceAll("\\[","");
+        return secondReview.replaceAll("]","");
     }
 }
