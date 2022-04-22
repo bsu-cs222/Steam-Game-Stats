@@ -4,6 +4,7 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import net.minidev.json.JSONArray;
 
 public class IsThereADealCaller {
     StoreSearch storeSearch = new StoreSearch();
@@ -27,8 +28,19 @@ public class IsThereADealCaller {
         priceCeiling = priceCeiling.replace(".0","");
         return priceCeiling;
     }
-    public String storeReviews(String title){
+
+    String percentageReview;
+    String totalReview;
+    String textReview;
+    public void storeReviews(String title){
         Response response = client.target(urlCreator.returnsReviews(title)).request(MediaType.TEXT_PLAIN_TYPE).get();
-        return storeSearch.jsonToReview(response.readEntity(String.class));
+        JSONArray updatesStrings = storeSearch.jsonToReview(response.readEntity(String.class));
+        String renameStuff = updatesStrings.get(0).toString();
+        String[] part = renameStuff.split(",",0);
+        totalReview = part[1];
+        percentageReview = part[0];
+        textReview = part[2];
     }
+
+
 }

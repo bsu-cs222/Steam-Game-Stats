@@ -58,6 +58,7 @@ public class MainGUI extends Application {
 
     private void runSearch(String gameName) {
         IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
+
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
         executor.execute(() -> {
@@ -65,7 +66,7 @@ public class MainGUI extends Application {
             lowSteamPrice = isThereADealCaller.historicalLowData(gameName, "steam");
             currentGogPrice = isThereADealCaller.currentPriceData(gameName,"gog");
             lowGogPrice = isThereADealCaller.historicalLowData(gameName,"gog");
-            reviewString = isThereADealCaller.storeReviews(gameName);
+            isThereADealCaller.storeReviews(gameName);
             Platform.runLater(this::updateTabInformation);
         });
         searchButton.setDisable(false);

@@ -27,13 +27,7 @@ public class StoreSearch {
         }
         return price;
     }
-    public String jsonToReview(String json){
-        JSONArray jsonRedirectsToReview = JsonPath.read(json,"$..steam");
-        JSONArray jsonRedirectsToPerc = JsonPath.read(jsonRedirectsToReview,"$..perc_positive");
-        JSONArray jsonRedirectsToTotal = JsonPath.read(jsonRedirectsToReview,"$..total");
-        JSONArray jsonRedirectsToText = JsonPath.read(jsonRedirectsToReview,"$..text");
-        String firstReview = jsonRedirectsToText.toString()+"\n"+jsonRedirectsToTotal.toString()+"\n"+jsonRedirectsToPerc.toString();
-        String secondReview = firstReview.replaceAll("\\[","");
-        return secondReview.replaceAll("]","");
+    public JSONArray jsonToReview(String json){
+        return JsonPath.read(json,"$..steam");
     }
 }
