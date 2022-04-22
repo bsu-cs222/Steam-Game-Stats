@@ -67,8 +67,6 @@ public class MainGUI extends Application {
     }
 
     private void runSearch(String gameName) {
-
-
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
         executor.execute(() -> {
@@ -98,8 +96,8 @@ public class MainGUI extends Application {
     }
 
     private void updateReviewTab() {
-        reviewString = String.format("Overall %s positive", isThereADealCaller.percentageReview);
-        reviewLabel.setFont(Font.font("Arial", FontWeight.NORMAL,14));
+        reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.percentageReview, isThereADealCaller.textReview, isThereADealCaller.totalReview);
+        reviewLabel.setFont(Font.font("Arial", FontWeight.NORMAL,20));
         reviewLabel.setText(reviewString);
     }
 
