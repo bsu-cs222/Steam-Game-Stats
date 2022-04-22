@@ -6,9 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -32,12 +39,15 @@ public class MainGUI extends Application {
     private int lowGogPrice = 0;
     private String reviewString;
 
+    IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
+
     public void start(Stage primaryStage) {
         addTabsToPane();
         Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
+        searchButton.setDefaultButton(true);
         searchButton.setOnAction((event) -> runSearch(searchTextField.getText()));
         primaryStage.show();
     }
@@ -57,7 +67,7 @@ public class MainGUI extends Application {
     }
 
     private void runSearch(String gameName) {
-        IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
+
 
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
@@ -88,6 +98,8 @@ public class MainGUI extends Application {
     }
 
     private void updateReviewTab() {
+        reviewString = String.format("Overall %s positive", isThereADealCaller.percentageReview);
+        reviewLabel.setFont(Font.font("Arial", FontWeight.NORMAL,14));
         reviewLabel.setText(reviewString);
     }
 
