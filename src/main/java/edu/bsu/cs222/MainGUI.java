@@ -3,6 +3,7 @@ package edu.bsu.cs222;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -11,11 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -26,9 +25,11 @@ public class MainGUI extends Application {
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final TabPane tabPane = new TabPane();
     private final VBox searchVbox = new VBox();
+    private final VBox reviewVbox = new VBox();
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
+    private final PieChart reviewChart = new PieChart();
     private final Tab searchTab = new Tab("Search");
     private final Tab priceTab = new Tab("Price", new Label("No price information available"));
     private final Label reviewLabel = new Label("No review information available");
@@ -56,7 +57,9 @@ public class MainGUI extends Application {
         searchTab.setClosable(false);
         searchTab.setContent(searchVbox);
         priceTab.setClosable(false);
+        reviewVbox.getChildren().addAll(reviewLabel, reviewChart);
         reviewTab.setClosable(false);
+        reviewTab.setContent(reviewVbox);
         tabPane.getTabs().addAll(searchTab, priceTab, reviewTab);
     }
 
@@ -98,6 +101,8 @@ public class MainGUI extends Application {
         String reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.percentageReview, isThereADealCaller.textReview, isThereADealCaller.totalReview);
         reviewLabel.setFont(Font.font("Arial", FontWeight.NORMAL,20));
         reviewLabel.setText(reviewString);
+        reviewVbox.getChildren().add(makeReviewPieChart());
+        reviewTab.setContent(reviewVbox);
     }
 
     private StackedBarChart<String, Number> makeGamePriceBarGraph() {
@@ -119,5 +124,14 @@ public class MainGUI extends Application {
         currentPriceSeries.getData().add(new XYChart.Data<>("gog", currentGogPrice-lowGogPrice));
         storePriceSummaryChart.getData().addAll(lowestPriceSeries,currentPriceSeries);
         return storePriceSummaryChart;
+    }
+
+    private PieChart makeReviewPieChart() {
+        double percentPositive = Double.parseDouble(isThereADealCaller.percentageReview);
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(new PieChart.Data("Positive", percentPositive), new PieChart.Data("Negative", 100-percentPositive));
+        reviewChart.setTitle("representation of reviews");
+        reviewChart.getData().addAll(pieChartData);
+        return reviewChart;
     }
 }

@@ -30,8 +30,8 @@ public class URLCreator {
             if (Character.isDigit(c)){
                 int characterNumericValue = Character.getNumericValue(c);
                 urlTitle.append(numberToRoman(characterNumericValue));
-            } else if (Character.isWhitespace(c)) {
-            } else {
+            } else if (Character.isWhitespace(c));
+            else {
                 urlTitle.append(Character.toLowerCase(c));
             }
         }
