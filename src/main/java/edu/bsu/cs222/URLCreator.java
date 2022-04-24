@@ -25,14 +25,14 @@ public class URLCreator {
     }
     public String returnsReviewsWithSpaces(String title) {
         StringBuilder urlTitle = new StringBuilder();
-        for(int i = 0;i<title.length();i++) {
-            char c = title.charAt(i);
-            if (Character.isDigit(c)){
-                int characterNumericValue = Character.getNumericValue(c);
+        for(int letters = 0;letters<title.length();letters++) {
+            char charTitle = title.charAt(letters);
+            if (Character.isDigit(charTitle)){
+                int characterNumericValue = Character.getNumericValue(charTitle);
                 urlTitle.append(numberToRoman(characterNumericValue));
-            } else if (Character.isWhitespace(c));
+            } else if (Character.isWhitespace(charTitle));
             else {
-                urlTitle.append(Character.toLowerCase(c));
+                urlTitle.append(Character.toLowerCase(charTitle));
             }
         }
         return urlTitle.toString();
