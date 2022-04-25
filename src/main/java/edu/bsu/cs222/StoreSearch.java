@@ -27,6 +27,7 @@ public class StoreSearch {
         }
         return price;
     }
+
     public JSONArray jsonToReview(String json){
         return JsonPath.read(json,"$..steam");
     }
