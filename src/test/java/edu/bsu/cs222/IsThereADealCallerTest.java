@@ -22,6 +22,7 @@ public class IsThereADealCallerTest {
     public void testCurrentPrice_NoGameFound(){
         int expected = -1;
         int actual = isThereADealCaller.getCurrentPriceData("jadhsg", "steam");
+        Assertions.assertEquals(expected, actual);
     }
 
 }
