@@ -72,11 +72,11 @@ public class MainGUI extends Application {
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
         executor.execute(() -> {
-            currentSteamPrice = isThereADealCaller.currentPriceData(gameName, "steam");
-            lowSteamPrice = isThereADealCaller.historicalLowData(gameName, "steam");
-            currentGogPrice = isThereADealCaller.currentPriceData(gameName,"gog");
-            lowGogPrice = isThereADealCaller.historicalLowData(gameName,"gog");
-            isThereADealCaller.storeReviews(gameName);
+            currentSteamPrice = isThereADealCaller.getCurrentPriceData(gameName, "steam");
+            lowSteamPrice = isThereADealCaller.getHistoricalLowData(gameName, "steam");
+            currentGogPrice = isThereADealCaller.getCurrentPriceData(gameName,"gog");
+            lowGogPrice = isThereADealCaller.getHistoricalLowData(gameName,"gog");
+            isThereADealCaller.depositReviews(gameName);
             Platform.runLater(this::updateTabInformation);
         });
         searchButton.setDisable(false);
@@ -98,7 +98,7 @@ public class MainGUI extends Application {
     }
 
     private void updateReviewTab() {
-        String reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.percentageReview, isThereADealCaller.textReview, isThereADealCaller.totalReview);
+        String reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.getPercentageReview(), isThereADealCaller.getTextReview(), isThereADealCaller.getTotalReview());
         reviewLabel.setFont(Font.font("Arial", FontWeight.NORMAL,20));
         reviewLabel.setText(reviewString);
         reviewVbox.getChildren().add(makeReviewPieChart());
@@ -127,7 +127,7 @@ public class MainGUI extends Application {
     }
 
     private PieChart makeReviewPieChart() {
-        double percentPositive = Double.parseDouble(isThereADealCaller.percentageReview);
+        double percentPositive = Double.parseDouble(isThereADealCaller.getPercentageReview());
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(new PieChart.Data("Positive", percentPositive), new PieChart.Data("Negative", 100-percentPositive));
         reviewChart.setTitle("representation of reviews");
