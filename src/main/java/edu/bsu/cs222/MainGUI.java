@@ -122,7 +122,7 @@ public class MainGUI extends Application {
         currentPriceSeries.setName("Current");
         currentPriceSeries.getData().add(new XYChart.Data<>("Steam", currentSteamPrice-lowSteamPrice));
         currentPriceSeries.getData().add(new XYChart.Data<>("gog", currentGogPrice-lowGogPrice));
-        storePriceSummaryChart.getData().addAll(lowestPriceSeries,currentPriceSeries);
+        storePriceSummaryChart.getData().addAll(Arrays.asList(lowestPriceSeries,currentPriceSeries));
         return storePriceSummaryChart;
     }
 
