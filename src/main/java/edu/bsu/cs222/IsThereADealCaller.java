@@ -7,9 +7,9 @@ import jakarta.ws.rs.core.Response;
 import net.minidev.json.JSONArray;
 
 public class IsThereADealCaller {
-    StoreSearch storeSearch = new StoreSearch();
-    URLCreator urlCreator = new URLCreator();
-    Client client = ClientBuilder.newClient();
+    private final StoreSearch storeSearch = new StoreSearch();
+    private final URLCreator urlCreator = new URLCreator();
+    private final Client client = ClientBuilder.newClient();
     private String percentageReview;
     private String totalReview;
     private String textReview;

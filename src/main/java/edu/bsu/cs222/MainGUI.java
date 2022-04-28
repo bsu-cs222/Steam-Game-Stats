@@ -39,7 +39,7 @@ public class MainGUI extends Application {
     private int currentGogPrice = 0;
     private int lowGogPrice = 0;
 
-    IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
+    private final IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
 
     public void start(Stage primaryStage) {
         addTabsToPane();

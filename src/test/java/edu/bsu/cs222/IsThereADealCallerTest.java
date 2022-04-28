@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class IsThereADealCallerTest {
-    IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
+    private final IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
 
     @Test
     public void testCurrentPrice_Fallout4() {
@@ -21,7 +21,7 @@ public class IsThereADealCallerTest {
     @Test
     public void testCurrentPrice_NoGameFound() {
         int expected = -1;
-        int actual = isThereADealCaller.getCurrentPriceData("jadhsg", "steam");
+        int actual = isThereADealCaller.getCurrentPriceData("random letters", "steam");
         Assertions.assertEquals(expected, actual);
     }
 }
