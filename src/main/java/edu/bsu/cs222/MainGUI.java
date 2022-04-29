@@ -41,9 +41,10 @@ public class MainGUI extends Application {
 
     private final IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
 
+    Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
+
     public void start(Stage primaryStage) {
         addTabsToPane();
-        Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Steam Game Stats");
         checkEmptyTextField();
@@ -68,7 +69,7 @@ public class MainGUI extends Application {
         searchTextField.textProperty().addListener((ov, t, t1) -> searchButton.setDisable(searchTextField.getText().equals("")));
     }
 
-    private void runSearch(String gameName) {
+    public void runSearch(String gameName) {
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
         executor.execute(() -> {
@@ -113,7 +114,9 @@ public class MainGUI extends Application {
         yAxis.setLabel("Price ($)");
         StackedBarChart<String, Number> storePriceSummaryChart = new StackedBarChart<>(xAxis, yAxis);
         storePriceSummaryChart.setTitle("Store Price Summary");
-        storePriceSummaryChart.setCategoryGap(SCENE_WIDTH/3f);
+        storePriceSummaryChart.setCategoryGap(scene.getWidth()/3f);
+        storePriceSummaryChart.setMinWidth(scene.getWidth()-100);
+        storePriceSummaryChart.setMaxWidth(scene.getWidth());
         XYChart.Series<String, Number> lowestPriceSeries = new XYChart.Series<>();
         lowestPriceSeries.setName("Low");
         lowestPriceSeries.getData().add(new XYChart.Data<>("Steam", lowSteamPrice));
