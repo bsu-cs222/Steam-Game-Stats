@@ -93,6 +93,8 @@ public class MainGUI extends Application {
         priceTab.setContent(makeGamePriceBarGraph());
         if (currentSteamPrice == -1||currentGogPrice == -1) {
             searchLabel.setText("Price Data Incomplete");
+        } else if(currentSteamPrice == -2||currentGogPrice == -2){
+            searchLabel.setText("No internet");
         } else {
             searchLabel.setText("Price Tab Has Been Updated");
         }
@@ -130,6 +132,7 @@ public class MainGUI extends Application {
     }
 
     private PieChart makeReviewPieChart() {
+        reviewChart.getData().clear();
         double percentPositive = Double.parseDouble(isThereADealCaller.getPercentageReview());
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(new PieChart.Data("Positive", percentPositive), new PieChart.Data("Negative", 100-percentPositive));
