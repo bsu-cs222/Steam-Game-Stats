@@ -31,7 +31,6 @@ public class MainGUI extends Application {
     private final Tab priceTab = new Tab("Price", new Label("No price information available"));
     private final VBox reviewVbox = new VBox();
     private final Label reviewLabel = new Label("No review information available");
-    private final PieChart reviewChart = new PieChart();
     private final Tab reviewTab = new Tab("Reviews", reviewLabel);
     private final Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
 
@@ -57,7 +56,6 @@ public class MainGUI extends Application {
         searchTab.setClosable(false);
         searchTab.setContent(searchVbox);
         priceTab.setClosable(false);
-        reviewVbox.getChildren().addAll(reviewLabel, reviewChart);
         reviewTab.setClosable(false);
         reviewTab.setContent(reviewVbox);
         tabPane.getTabs().addAll(searchTab, priceTab, reviewTab);
@@ -103,7 +101,7 @@ public class MainGUI extends Application {
         String reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.getPercentageReview(), isThereADealCaller.getTextReview(), isThereADealCaller.getTotalReview());
         reviewLabel.setFont(Font.font("Arial",20));
         reviewLabel.setText(reviewString);
-        reviewVbox.getChildren().add(makeReviewPieChart());
+        reviewVbox.getChildren().addAll(reviewLabel, makeReviewPieChart());
         reviewTab.setContent(reviewVbox);
     }
 
@@ -131,7 +129,7 @@ public class MainGUI extends Application {
     }
 
     private PieChart makeReviewPieChart() {
-        reviewChart.getData().clear();
+        PieChart reviewChart = new PieChart();
         double percentPositive = Double.parseDouble(isThereADealCaller.getPercentageReview());
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(new PieChart.Data("Positive", percentPositive), new PieChart.Data("Negative", 100-percentPositive));
