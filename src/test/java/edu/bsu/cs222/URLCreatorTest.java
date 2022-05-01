@@ -13,4 +13,18 @@ public class URLCreatorTest {
         String actual = urlCreator.urlSearch("falloutiv", "steam");
         Assertions.assertEquals(expected, actual);
     }
+
+    @Test
+    public void testTransformTitle() {
+        String expected = "falloutiv";
+        String actual = urlCreator.transformTitle("Fallout 4");
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testNumberToRoman() {
+        String expected = "vii";
+        String actual = urlCreator.numberToRoman(7);
+        Assertions.assertEquals(expected, actual);
+    }
 }

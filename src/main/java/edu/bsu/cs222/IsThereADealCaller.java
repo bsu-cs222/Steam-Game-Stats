@@ -27,12 +27,12 @@ public class IsThereADealCaller {
 
     public Integer getHistoricalLowData(String title, String store) {
         try {
-        Response response = client.target(urlCreator.urlSearch(title, store)).request(MediaType.APPLICATION_JSON).get();
-        String jsonPrice = storeSearch.jsonToLowest(response.readEntity(String.class));
-        return Integer.parseInt(parseToString(jsonPrice));
+            Response response = client.target(urlCreator.urlSearch(title, store)).request(MediaType.APPLICATION_JSON).get();
+            String jsonPrice = storeSearch.jsonToLowest(response.readEntity(String.class));
+            return Integer.parseInt(parseToString(jsonPrice));
         } catch (Exception exception) {
-        //throws -2 because -1 tells the UI the game doesn't exist
-        return -2;
+            //throws -2 because -1 tells the UI the game doesn't exist
+            return -2;
         }
     }
 
@@ -45,14 +45,14 @@ public class IsThereADealCaller {
 
     //Method Below Stores the Review from Search title
     public void depositReviews(String title) {
-        try{
-        Response response = client.target(urlCreator.returnsReviews(title)).request(MediaType.TEXT_PLAIN_TYPE).get();
-        JSONArray updatesStrings = storeSearch.jsonToReview(response.readEntity(String.class));
-        String renameStuff = updatesStrings.get(0).toString();
-        String[] part = renameStuff.split(",", 0);
-        totalReview = part[1].replace("total=", "");
-        percentageReview = part[0].replace("{perc_positive=", "");
-        textReview = part[2].replace("text=", "");
+        try {
+            Response response = client.target(urlCreator.returnsReviews(title)).request(MediaType.TEXT_PLAIN_TYPE).get();
+            JSONArray updatesStrings = storeSearch.jsonToReview(response.readEntity(String.class));
+            String renameStuff = updatesStrings.get(0).toString();
+            String[] part = renameStuff.split(",", 0);
+            totalReview = part[1].replace("total=", "");
+            percentageReview = part[0].replace("{perc_positive=", "");
+            textReview = part[2].replace("text=", "");
         } catch (Exception ignored) {
         }
     }
