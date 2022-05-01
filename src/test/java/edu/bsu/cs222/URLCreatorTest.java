@@ -9,7 +9,7 @@ public class URLCreatorTest {
 
     @Test
     public void currentPriceDataTest() {
-        String expected = String.format("https://api.isthereanydeal.com/v01/game/overview/?key=%s&region=us&country=US&plains=falloutiv&shop=steam&allowed=steam", keyHolder.keyReturner());
+        String expected = String.format("https://api.isthereanydeal.com/v01/game/overview/?key=%s&region=us&country=US&plains=falloutiv&shop=steam&allowed=steam", keyHolder.getKey());
         String actual = urlCreator.urlSearch("falloutiv", "steam");
         Assertions.assertEquals(expected, actual);
     }
