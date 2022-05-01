@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -25,23 +24,23 @@ public class MainGUI extends Application {
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final TabPane tabPane = new TabPane();
     private final VBox searchVbox = new VBox();
-    private final VBox reviewVbox = new VBox();
     private final TextField searchTextField = new TextField();
     private final Button searchButton = new Button("Search");
     private final Label searchLabel = new Label("Search a Steam Game");
-    private final PieChart reviewChart = new PieChart();
     private final Tab searchTab = new Tab("Search");
     private final Tab priceTab = new Tab("Price", new Label("No price information available"));
+    private final VBox reviewVbox = new VBox();
     private final Label reviewLabel = new Label("No review information available");
+    private final PieChart reviewChart = new PieChart();
     private final Tab reviewTab = new Tab("Reviews", reviewLabel);
+    private final Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
+
     private int currentSteamPrice = 0;
     private int lowSteamPrice = 0;
     private int currentGogPrice = 0;
     private int lowGogPrice = 0;
 
     private final IsThereADealCaller isThereADealCaller = new IsThereADealCaller();
-
-    Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
 
     public void start(Stage primaryStage) {
         addTabsToPane();
@@ -93,7 +92,7 @@ public class MainGUI extends Application {
         priceTab.setContent(makeGamePriceBarGraph());
         if (currentSteamPrice == -1||currentGogPrice == -1) {
             searchLabel.setText("Price Data Incomplete");
-        } else if(currentSteamPrice == -2||currentGogPrice == -2){
+        } else if (currentSteamPrice == -2||currentGogPrice == -2) {
             searchLabel.setText("No internet");
         } else {
             searchLabel.setText("Price Tab Has Been Updated");
@@ -102,7 +101,7 @@ public class MainGUI extends Application {
 
     private void updateReviewTab() {
         String reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.getPercentageReview(), isThereADealCaller.getTextReview(), isThereADealCaller.getTotalReview());
-        reviewLabel.setFont(Font.font("Arial", FontWeight.NORMAL,20));
+        reviewLabel.setFont(Font.font("Arial",20));
         reviewLabel.setText(reviewString);
         reviewVbox.getChildren().add(makeReviewPieChart());
         reviewTab.setContent(reviewVbox);
