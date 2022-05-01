@@ -19,8 +19,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class MainGUI extends Application {
-    public static final int SCENE_WIDTH = 800;
-    public static final int SCENE_HEIGHT = 600;
+    private static final int SCENE_WIDTH = 800;
+    private static final int SCENE_HEIGHT = 600;
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final TabPane tabPane = new TabPane();
     private final VBox searchVbox = new VBox();
@@ -29,7 +29,6 @@ public class MainGUI extends Application {
     private final Label searchLabel = new Label("Search a Steam Game");
     private final Tab searchTab = new Tab("Search");
     private final Tab priceTab = new Tab("Price", new Label("No price information available"));
-    private final VBox reviewVbox = new VBox();
     private final Label reviewLabel = new Label("No review information available");
     private final Tab reviewTab = new Tab("Reviews", reviewLabel);
     private final Scene scene = new Scene(tabPane, SCENE_WIDTH, SCENE_HEIGHT);
@@ -57,7 +56,6 @@ public class MainGUI extends Application {
         searchTab.setContent(searchVbox);
         priceTab.setClosable(false);
         reviewTab.setClosable(false);
-        reviewTab.setContent(reviewVbox);
         tabPane.getTabs().addAll(searchTab, priceTab, reviewTab);
     }
 
@@ -66,7 +64,7 @@ public class MainGUI extends Application {
         searchTextField.textProperty().addListener((ov, t, t1) -> searchButton.setDisable(searchTextField.getText().equals("")));
     }
 
-    public void runSearch(String gameName) {
+    private void runSearch(String gameName) {
         searchButton.setDisable(true);
         searchTextField.setDisable(true);
         executor.execute(() -> {
@@ -82,11 +80,11 @@ public class MainGUI extends Application {
     }
 
     private void updateTabInformation() {
-        updateGamePrice();
+        updatePriceTab();
         updateReviewTab();
     }
 
-    private void updateGamePrice() {
+    private void updatePriceTab() {
         priceTab.setContent(makeGamePriceBarGraph());
         if (currentSteamPrice == -1||currentGogPrice == -1) {
             searchLabel.setText("Price Data Incomplete");
@@ -98,7 +96,8 @@ public class MainGUI extends Application {
     }
 
     private void updateReviewTab() {
-        String reviewString = String.format("Overall: %s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.getPercentageReview(), isThereADealCaller.getTextReview(), isThereADealCaller.getTotalReview());
+        VBox reviewVbox = new VBox();
+        String reviewString = String.format("Overall: %s%s positive\nReception: %s\nNumber of Reviews: %s", isThereADealCaller.getPercentageReview(), "%", isThereADealCaller.getTextReview(), isThereADealCaller.getTotalReview());
         reviewLabel.setFont(Font.font("Arial",20));
         reviewLabel.setText(reviewString);
         reviewVbox.getChildren().addAll(reviewLabel, makeReviewPieChart());
@@ -130,10 +129,11 @@ public class MainGUI extends Application {
 
     private PieChart makeReviewPieChart() {
         PieChart reviewChart = new PieChart();
+        reviewChart.getData().clear();
         double percentPositive = Double.parseDouble(isThereADealCaller.getPercentageReview());
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(new PieChart.Data("Positive", percentPositive), new PieChart.Data("Negative", 100-percentPositive));
-        reviewChart.setTitle("representation of reviews");
+        reviewChart.setTitle("Proportion of Reviews");
         reviewChart.getData().addAll(pieChartData);
         return reviewChart;
     }
