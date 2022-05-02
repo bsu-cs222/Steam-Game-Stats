@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 public class StoreSearchTest {
     private final StoreSearch storeSearch = new StoreSearch();
-    private final InputStream inputStream = StoreSearchTest.class.getClassLoader().getResourceAsStream("test1.json");
+    private final InputStream overviewStream = StoreSearchTest.class.getClassLoader().getResourceAsStream("overviewTest.json");
     private final String priceOverviewJson;
 
     {
-        assert inputStream != null;
-        priceOverviewJson = new BufferedReader(new InputStreamReader(inputStream)).lines().parallel().collect(Collectors.joining("\n"));
+        assert overviewStream != null;
+        priceOverviewJson = new BufferedReader(new InputStreamReader(overviewStream)).lines().parallel().collect(Collectors.joining("\n"));
     }
 
     @Test
@@ -31,5 +31,15 @@ public class StoreSearchTest {
         String expected = "4.99";
         String actual = storeSearch.jsonToLowestPrice(priceOverviewJson);
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testReviewData(){
+        InputStream reviewStream = StoreSearchTest.class.getClassLoader().getResourceAsStream("reviewDataTest.json");
+        assert reviewStream != null;
+        String dataReviewJson = new BufferedReader(new InputStreamReader(reviewStream)).lines().parallel().collect(Collectors.joining("\n"));
+        String expected = "[{\"perc_positive\":80,\"total\":159318,\"text\":\"Very Positive\\nVery Positive\",\"timestamp\":1634592789}]";
+        String actual = storeSearch.jsonToReview(dataReviewJson).toString();
+        Assertions.assertEquals(expected,actual);
     }
 }

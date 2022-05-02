@@ -6,7 +6,6 @@ import net.minidev.json.JSONArray;
 public class StoreSearch {
     public String jsonToCurrentPrice(String json) {
         JSONArray jsonRedirectsCurrent = JsonPath.read(json,"$..price");
-        System.out.println(jsonRedirectsCurrent);
         String price;
         if (jsonRedirectsCurrent.toString().equals("[null]")) {
             price = "-1";

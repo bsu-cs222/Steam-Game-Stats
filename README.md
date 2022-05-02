@@ -5,4 +5,4 @@ displays a stacked bar graph and reviews of searched game from data collected on
 
 Bar graph displays -1 when the searched game is not found.
 
-v0.2
+v0.3
