@@ -8,9 +8,16 @@ public class URLCreatorTest {
     private final URLCreator urlCreator =  new URLCreator();
 
     @Test
-    public void currentPriceDataTest() {
+    public void testGameURL() {
         String expected = String.format("https://api.isthereanydeal.com/v01/game/overview/?key=%s&region=us&country=US&plains=falloutiv&shop=steam&allowed=steam", keyHolder.getKey());
         String actual = urlCreator.urlSearch("falloutiv", "steam");
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testReturnsReviewURL() {
+        String expected = String.format("https://api.isthereanydeal.com/v01/game/info/?key=%s&plains=falloutiv",keyHolder.getKey());
+        String actual = urlCreator.returnsReviewURL("falloutiv");
         Assertions.assertEquals(expected, actual);
     }
 

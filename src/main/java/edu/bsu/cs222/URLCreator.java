@@ -8,7 +8,7 @@ public class URLCreator {
         return String.format("https://api.isthereanydeal.com/v01/game/overview/?key=%s&region=us&country=US&plains=%s&shop=%s&allowed=%s" ,keyHolder.getKey(),romanTitle, store, store);
     }
 
-    public String returnsReviews(String userInputtedTitle) {
+    public String returnsReviewURL(String userInputtedTitle) {
         String romanTitle = transformTitle(userInputtedTitle);
         //Url returns the review information from the IsThereADeal Api
         return String.format("https://api.isthereanydeal.com/v01/game/info/?key=%s&plains=%s",keyHolder.getKey(),romanTitle);

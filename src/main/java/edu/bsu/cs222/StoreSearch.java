@@ -4,8 +4,9 @@ import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
 
 public class StoreSearch {
-    public String jsonToString(String json) {
+    public String jsonToCurrentPrice(String json) {
         JSONArray jsonRedirectsCurrent = JsonPath.read(json,"$..price");
+        System.out.println(jsonRedirectsCurrent);
         String price;
         if (jsonRedirectsCurrent.toString().equals("[null]")) {
             price = "-1";
@@ -16,7 +17,7 @@ public class StoreSearch {
         return price;
     }
 
-    public String jsonToLowest(String json) {
+    public String jsonToLowestPrice(String json) {
         JSONArray jsonRedirectsToLowest = JsonPath.read(json, "$..lowest");
         String price;
         if (jsonRedirectsToLowest.toString().equals("[null]")) {
